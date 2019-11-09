@@ -21,13 +21,25 @@ namespace CandyMarket.Api.Repositories
 
                 return candies.AsList();
             }
-
-
         }
 
         public bool AddCandy(AddCandyDto newCandy)
         {
-            throw new NotImplementedException();
+            using (var db = new SqlConnection(_connectionString))
+            {
+              var addCandy = @"insert into [Candy]
+                                    ([Name]) 
+                                    output inserted.* 
+                                    values 
+                                    (@name)";
+                
+                var parameters = new { 
+                    name = newCandy.Name 
+                };
+
+               var rowsAffected = db.Execute(addCandy, parameters);
+                return rowsAffected == 1;
+            }
         }
 
         public bool EatCandy(Guid candyIdToDelete)
