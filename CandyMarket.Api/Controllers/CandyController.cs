@@ -24,7 +24,7 @@ namespace CandyMarket.Api.Controllers
 
         [HttpGet]
         public IEnumerable<Candy> GetAll()
-        {
+        {            
             return _repo.GetAllCandy();
         }
 
